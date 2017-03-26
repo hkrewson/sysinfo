@@ -1,0 +1,48 @@
+#!/bin/bash
+# Gather and present specific system related information pulled from bios
+#   using sudo dmidecode
+
+# Step 1 gather information desired.
+# System
+siMAN=$(sudo dmidecode -s system-manufacturer)
+siPROD=$(sudo dmidecode -s system-product-name)
+siSSN=$(sudo dmidecode -s system-serial-number)
+
+# Bios
+siBIOS=$(sudo dmidecode -s bios-vendor)
+siBIOSV=$(sudo dmidecode -s bios-version)
+
+# Logic Board Info
+siLOG=$(sudo dmidecode -s baseboard-product-name)
+siLTP=$(sudo dmidecode -s baseboard-version | cut -d' ' -f1 -)
+siLSN=$(sudo dmidecode -s baseboard-serial-number)
+
+# Processor
+siPROC=$(sudo dmidecode -s processor-version)
+
+# Memory
+siMMAX=$(sudo dmidecode -t memory | grep "Maximum Capacity" | awk -F': ' '{printf "%.2f GiB (%.f GB)", $2 * .953674, $2}')
+
+siMEM=$(free -m | awk 'FNR == 2 {printf "%.2f GiB ( %.f GB)", $2/1024, $2/1024}')
+# Alternate form for locating and displaying installed memory
+# siMEM=$(sudo dmidecode -t memory | grep "Size" | awk 'BEGIN {c=0}; NR==7 {a=$2};NR==8 {b=$2}; {c=a+b} END {print c}')
+
+# OS Release
+# gsub(/"/, "", $2) -- remove surround quotation marks
+# http://stackoverflow.com/questions/19474860/remove-quotes-in-awk-command
+siDIST=$(cat /etc/*release | grep '\<NAME' | awk -F= '{gsub(/"/, "", $2); printf "%s", $2}')
+siREL=$(cat /etc/*release | grep "PRETTY" | awk -F= '{gsub(/"/, "", $2); printf "%s", $2}')
+siURL=$(cat /etc/*release | grep "HOME" | awk -F= '{gsub(/"/, "", $2); printf "%s", $2}')
+
+# Print formatted for the shell.
+printf "\n"
+printf "%25s %s %s\n" "Computer Model:" "$siMAN $siPROD"
+printf "%25s %s\n" "Serial Number:" "$siSSN"
+printf "%25s %s\n" "Operating System:" "$siREL"
+printf "%25s %s\n" "Project URL:" "$siURL"
+printf "%25s %s %s\n" "BIOS:" "$siBIOS $siBIOSV"
+printf "%25s %s %s\n" "Logic Board:" "$siLOG $siLTP"
+printf "%25s %s\n" "Logic Board Serial:" "$siLSN"
+printf "%25s %s\n" "Processor:" "$siPROC"
+printf "%25s %s\n" "Memory Installed:" "$siMEM"
+printf "%25s %s\n\n" "Maximum Memory:" "$siMMAX" 
