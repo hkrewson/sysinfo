@@ -25,5 +25,14 @@ Or to output to a file:
 
      sysinfo >~/filename
      
+Requirements
+-----------------
 
+Script expects sudo access, and relies on the following bash command:
+
+    dmidecode
+
+sysinfo also expects a file describing the linux release located at:
+
+    /etc/*release
 
