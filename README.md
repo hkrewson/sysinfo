@@ -39,7 +39,7 @@ Output
 ------------------
           Computer Model: Manufacturer & Model Name/Number 
            Serial Number: Serial
-        Operating System: Fedora 25 (Workstation Edition)
+        Operating System: Distro Release (Version Tag)
              Project URL: URL for associated project
                     BIOS: Bios Manufacturer & Firmware Version
              Logic Board: Logic Board 
