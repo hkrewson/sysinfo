@@ -1,8 +1,7 @@
 sysinfo
 ======
 
-Carbon was created for two reasons. First, I wanted to learn a bit about shell scripts. Second, I wanted a way to 
-get feedback about the progress of ditto. 
+Sysinfo was created to fill a gap in the ability to easily locate specific system related information. I was looking for one tool that would present items similar to what might be found in macOS' "About This Mac" menu item.
 
 
 Installing sysinfo
@@ -35,4 +34,16 @@ Script expects sudo access, and relies on the following bash command:
 sysinfo also expects a file describing the linux release located at:
 
     /etc/*release
-
+    
+Output
+------------------
+          Computer Model: Manufacturer & Model Name/Number 
+           Serial Number: Serial
+        Operating System: Distro Release (Version Tag)
+             Project URL: URL for associated project
+                    BIOS: Bios Manufacturer & Firmware Version
+             Logic Board: Logic Board 
+      Logic Board Serial: Serial
+               Processor: CPU Manufacturer and Model
+        Memory Installed: Installed RAM
+          Maximum Memory: Max Installable RAM
