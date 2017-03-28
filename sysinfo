@@ -1,6 +1,7 @@
 #!/bin/bash
 # Gather and present specific system related information pulled from bios
 #   using sudo dmidecode
+siVERSION="rc8"
 
 # Step 1 gather information desired.
 # System
@@ -18,7 +19,7 @@ siLTP=$(sudo dmidecode -s baseboard-version | cut -d' ' -f1 -)
 siLSN=$(sudo dmidecode -s baseboard-serial-number)
 
 # Processor
-siPROC=$(sudo dmidecode -s processor-version)
+siPROC=$(sudo dmidecode -s processor-version | awk 'FNR==1 {printf $n}')
 
 # Memory
 siMMAX=$(sudo dmidecode -t memory | grep "Maximum Capacity" | awk -F': ' '{printf "%.2f GiB (%.f GB)", $2 * .953674, $2}')
